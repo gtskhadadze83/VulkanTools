@@ -23,7 +23,6 @@ add_executable(vkconfig
     ${CMAKE_CURRENT_SOURCE_DIR}/macOS/Resources/LunarGIcon.icns
     )
 #set_target_properties(vkconfig PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/macOS/Info.plist)
-set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/macOS/vkconfig.sh PROPERTIES MACOSX_PACKAGE_LOCATION "MacOS")
 set_source_files_properties(${CMAKE_CURRENT_SOURCE_DIR}/macOS/Resources/LunarGIcon.icns
                             PROPERTIES
                             MACOSX_PACKAGE_LOCATION
