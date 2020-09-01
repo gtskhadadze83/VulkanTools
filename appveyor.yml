@@ -31,7 +31,7 @@ install:
   - if %PLATFORM% == x64 (set QTDIR=C:\Qt\5.9.9\msvc2017_64)
   - if %PLATFORM% == Win32 (set QTDIR=C:\Qt\5.9.9\msvc2017)
   - set PATH=%PATH%;%QTDIR%\bin
-  - choco install windows-sdk-10-version-1809-all
+  - choco install windows-sdk-10-version-2004-all
 
 before_build:
   - "SET PATH=C:\\Python35;C:\\Python35\\Scripts;%PATH%"
@@ -61,7 +61,6 @@ before_build:
   - echo Building platform=%PLATFORM% configuration=%CONFIGURATION%
 
 platform:
-  - Win32
   - x64
 
 configuration:
@@ -73,8 +72,6 @@ configuration:
 # Release vs Debug coverage.
 matrix:
   exclude:
-    - configuration: Release
-      platform: Win32
     - configuration: Debug
       platform: x64
 
