@@ -21,7 +21,7 @@ environment:
 
 branches:
   only:
-    - master
+    - sdk-1.2.148
 
 install:
   - appveyor DownloadFile %CMAKE_URL% -FileName cmake.zip
@@ -41,7 +41,7 @@ before_build:
   # - if %PLATFORM% == Win32 (if %CONFIGURATION% == Debug (update_external_sources.bat --32 --debug))
   # - if %PLATFORM% == Win32 (if %CONFIGURATION% == Release (update_external_sources.bat --32 --release))
   # - if %PLATFORM% == x64 (if %CONFIGURATION% == Debug (update_external_sources.bat --64 --debug))
-  - ./update_external_sources.bat
+  - update_external_sources.bat --64 --release
   # Determine the appropriate CMake generator for the current version of Visual Studio
   - echo Determining VS version
   - python .\scripts\determine_vs_version.py > vsversion.tmp
@@ -58,7 +58,7 @@ before_build:
   - mkdir build
   - cd build
   - mkdir install
-  - cmake -G %GENERATOR% -DCMAKE_INSTALL_PREFIX=build/install -C../helper.cmake ..
+  - cmake -G %GENERATOR% -C../helper.cmake ..
   - echo Building platform=%PLATFORM% configuration=%CONFIGURATION%
 
 platform:
