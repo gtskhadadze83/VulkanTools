@@ -74,7 +74,7 @@ configuration:
 build:
   parallel: true                  # enable MSBuild parallel builds
   project: build/VULKAN_TOOLS.sln # path to Visual Studio solution or project
-  verbosity: detailed                # quiet|minimal|normal|detailed
+  verbosity: normal                # quiet|minimal|normal|detailed
   
 artifacts:
   - path: build
