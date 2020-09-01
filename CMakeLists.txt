@@ -150,9 +150,8 @@ find_package(Vulkan)
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows" OR
     CMAKE_SYSTEM_NAME STREQUAL "Linux" OR
     CMAKE_SYSTEM_NAME MATCHES "BSD")
-    option(BUILD_TESTS OFF)
-    option(BUILD_LAYERS ON)
-    option(BUILD_TESTS "Build tests" ON)
+    
+    option(BUILD_TESTS "Build tests" OFF)
     option(BUILD_LAYERSVT "Build layersvt" ON)
     option(BUILD_VLF "Build layer_factory" ON)
     option(BUILD_VIA "Build via" ON)
