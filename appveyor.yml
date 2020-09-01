@@ -78,5 +78,12 @@ build:
   
 artifacts:
   - path: build
-    name: VulkanTools_%PLATFORM%.zip
+    name: VulkanToolsBuild_%PLATFORM%
     type: zip
+    
+  - path: Vulkan-Tools
+    name: VulkanTools_%PLATFORM%
+    type: zip
+  
+  
+    
