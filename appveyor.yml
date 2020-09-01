@@ -12,7 +12,7 @@ version: "{build}"
 max_jobs: 4
 
 os:
-  - Visual Studio 2017
+  - Visual Studio 201
 
 environment:
   PYTHON_PATH: "C:/Python35"
@@ -38,10 +38,10 @@ before_build:
   - echo.
   - echo Starting build for %APPVEYOR_REPO_NAME%
   - echo Update external sources
-  - if %PLATFORM% == Win32 (if %CONFIGURATION% == Debug (update_external_sources.bat --32 --debug))
-  - if %PLATFORM% == Win32 (if %CONFIGURATION% == Release (update_external_sources.bat --32 --release))
-  - if %PLATFORM% == x64 (if %CONFIGURATION% == Debug (update_external_sources.bat --64 --debug))
-  - if %PLATFORM% == x64 (if %CONFIGURATION% == Release (update_external_sources.bat --64 --release))
+  # - if %PLATFORM% == Win32 (if %CONFIGURATION% == Debug (update_external_sources.bat --32 --debug))
+  # - if %PLATFORM% == Win32 (if %CONFIGURATION% == Release (update_external_sources.bat --32 --release))
+  # - if %PLATFORM% == x64 (if %CONFIGURATION% == Debug (update_external_sources.bat --64 --debug))
+  - ./update_external_sources.bat
   # Determine the appropriate CMake generator for the current version of Visual Studio
   - echo Determining VS version
   - python .\scripts\determine_vs_version.py > vsversion.tmp
@@ -51,13 +51,14 @@ before_build:
   - if %PLATFORM% == Win32 (set GENERATOR="Visual Studio %VS_VERSION%")
   - if %PLATFORM% == x64 (set GENERATOR="Visual Studio %VS_VERSION% Win64")
   ## Build VulkanTools deps
-  - python scripts/update_deps.py --config=%CONFIGURATION% --arch=%PLATFORM%
+  - python scripts/update_deps.py --arch=%PLATFORM%
   # Generate build files using CMake for the build step.
   - echo Generating CMake files for %GENERATOR%
   - cd %APPVEYOR_BUILD_FOLDER%
   - mkdir build
   - cd build
-  - cmake -G %GENERATOR% -C../helper.cmake ..
+  - mkdir install
+  - cmake -G %GENERATOR% -DCMAKE_INSTALL_PREFIX=build/install -C../helper.cmake ..
   - echo Building platform=%PLATFORM% configuration=%CONFIGURATION%
 
 platform:
@@ -65,15 +66,10 @@ platform:
 
 configuration:
   - Release
-  - Debug
 
 # Build only x64 Release and Win32(x86) Debug to reduce build time.
 # This should still provide adequate 32-bit vs 64-bit and
 # Release vs Debug coverage.
-matrix:
-  exclude:
-    - configuration: Debug
-      platform: x64
 
 build:
   parallel: true                  # enable MSBuild parallel builds
@@ -82,5 +78,5 @@ build:
   
 artifacts:
   - path: build
-    name: VulkanTools_%PLATFORM%
+    name: VulkanTools_%PLATFORM%.zip
     type: zip
