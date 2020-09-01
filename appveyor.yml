@@ -38,10 +38,10 @@ before_build:
   - echo.
   - echo Starting build for %APPVEYOR_REPO_NAME%
   - echo Update external sources
-  # - if %PLATFORM% == Win32 (if %CONFIGURATION% == Debug (update_external_sources.bat --32 --debug))
-  # - if %PLATFORM% == Win32 (if %CONFIGURATION% == Release (update_external_sources.bat --32 --release))
-  # - if %PLATFORM% == x64 (if %CONFIGURATION% == Debug (update_external_sources.bat --64 --debug))
-  - update_external_sources.bat --64 --release
+  - if %PLATFORM% == Win32 (if %CONFIGURATION% == Debug (update_external_sources.bat --32 --debug))
+  - if %PLATFORM% == Win32 (if %CONFIGURATION% == Release (update_external_sources.bat --32 --release))
+  - if %PLATFORM% == x64 (if %CONFIGURATION% == Debug (update_external_sources.bat --64 --debug))
+  - if %PLATFORM% == x64 (if %CONFIGURATION% == Release (update_external_sources.bat --64 --release))
   # Determine the appropriate CMake generator for the current version of Visual Studio
   - echo Determining VS version
   - python .\scripts\determine_vs_version.py > vsversion.tmp
@@ -51,7 +51,7 @@ before_build:
   - if %PLATFORM% == Win32 (set GENERATOR="Visual Studio %VS_VERSION%")
   - if %PLATFORM% == x64 (set GENERATOR="Visual Studio %VS_VERSION% Win64")
   ## Build VulkanTools deps
-  - python scripts/update_deps.py --arch=%PLATFORM%
+  - python scripts/update_deps.py --config=%CONFIGURATION% --arch=%PLATFORM%
   # Generate build files using CMake for the build step.
   - echo Generating CMake files for %GENERATOR%
   - cd %APPVEYOR_BUILD_FOLDER%
@@ -84,6 +84,3 @@ artifacts:
   - path: Vulkan-Tools
     name: VulkanTools_%PLATFORM%
     type: zip
-  
-  
-    
