@@ -81,4 +81,9 @@ matrix:
 build:
   parallel: true                  # enable MSBuild parallel builds
   project: build/VULKAN_TOOLS.sln # path to Visual Studio solution or project
-  verbosity: quiet                # quiet|minimal|normal|detailed
+  verbosity: detailed                # quiet|minimal|normal|detailed
+  
+artifacts:
+  - path: build
+    name: VulkanTools_%PLATFORM%
+    type: zip
